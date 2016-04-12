@@ -32,16 +32,30 @@ public class LHPlayerService extends Service {
 
     private LHState mState = LHState.UNKNOWN;
     private IPlayer mPlayer;
-    private ILHPlayer.Stub mBinder;
+    private ILHPlayer.Stub mBinder = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate");
-        mBinder = new MyBinder();
-
+        if(mBinder == null)
+            mBinder = new MyBinder();
+        else
+            Log.d(TAG,"mBinder has been created!");
 
 //        IjkMediaPlayer.loadLibrariesOnce(null);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+        mBinder = null;
+        if(mPlayer != null){
+            mPlayer.stop();
+            mPlayer.release();
+            mPlayer = null;
+        }
     }
 
     @Override
@@ -396,7 +410,7 @@ public class LHPlayerService extends Service {
             Log.d(TAG, "create---begin");
             synchronized (LOCK_AIDL) {
                 String playertype = getprop("persist.sys.lhplayer.type", "1");
-                Log.d(TAG, "Player Type="+playertype);
+                Log.d(TAG, "Player Type=" + playertype);
 
                 if (mPlayer == null) {
 
@@ -411,8 +425,10 @@ public class LHPlayerService extends Service {
                         mPlayer = new IjkPlayer(mBinder);
                     }
                     Log.d(TAG, "create, version: " + VERSION);
-                }else
-                    Log.e(TAG, "mPlayer is not null");
+                }else{
+                    Log.e(TAG, "mPlayer has already been created!");
+                    mPlayer.stop();
+                }
             }
             Log.d(TAG, "create---end");
         }
