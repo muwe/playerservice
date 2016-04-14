@@ -50,17 +50,19 @@ public class AndroidTrackInfo implements ITrackInfo {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public IMediaFormat getFormat() {
-        if (mTrackInfo == null)
-            return null;
+//        if (mTrackInfo == null)
+//            return null;
+//
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+//            return null;
+//
+//        MediaFormat mediaFormat = mTrackInfo.getFormat();
+//        if (mediaFormat == null)
+//            return null;
+//
+//        return new AndroidMediaFormat(mediaFormat);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
-            return null;
-
-        MediaFormat mediaFormat = mTrackInfo.getFormat();
-        if (mediaFormat == null)
-            return null;
-
-        return new AndroidMediaFormat(mediaFormat);
+        return null;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

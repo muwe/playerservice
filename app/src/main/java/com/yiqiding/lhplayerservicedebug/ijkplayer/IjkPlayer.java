@@ -131,7 +131,7 @@ public class IjkPlayer implements IPlayer {
     public int getDuration() {
         return (int) mMediaPlayer.getDuration();
     }
-    
+
     public void seekTo(int delta) {
         int current = getCurrentPosition();
         current += delta;
@@ -248,7 +248,7 @@ public class IjkPlayer implements IPlayer {
         public boolean onError(IMediaPlayer mp, int what, int extra) {
             boolean bRet = false;
             if (mCallBack != null) {
-                Log.d(TAG, "Client's onError will be called");
+                Log.d(TAG, "Client's onError will be called,what="+what+",extra="+extra);
                 try {
                     bRet = mCallBack.onError(mBinder, 1001, extra);
                 } catch (RemoteException e) {
